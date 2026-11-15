@@ -28,8 +28,8 @@ export function Settings() {
     const header = "date,merchant,category,amount,note,source\n";
     const lines = expenses.map((e) => {
       const cat = categories.find((c) => c.id === e.category_id);
-      const name = cat ? (lang === "ar" ? cat.name_ar : cat.name_en) : "";
-      return [e.spent_at, e.merchant ?? "", name, e.amount, e.note ?? "", e.source]
+      const n = cat ? (lang === "ar" ? cat.name_ar : cat.name_en) : "";
+      return [e.spent_at, e.merchant ?? "", n, e.amount, e.note ?? "", e.source]
         .map((x) => `"${String(x).replace(/"/g, '""')}"`)
         .join(",");
     });
@@ -59,9 +59,7 @@ export function Settings() {
             <label>{t(lang, "payday")}</label>
             <input type="number" min={1} max={31} value={payday} onChange={(e) => setPayday(e.target.value)} />
           </div>
-          <button className="btn block" type="submit">
-            {t(lang, "save")}
-          </button>
+          <button className="btn block" type="submit">{t(lang, "save")}</button>
         </form>
         {msg && <p className="success">{msg}</p>}
       </div>
@@ -71,12 +69,7 @@ export function Settings() {
           <label>{t(lang, "language")}</label>
           <div className="chip-row">
             {(["en", "ar"] as Language[]).map((l) => (
-              <button
-                key={l}
-                type="button"
-                className={`chip ${profile?.language === l ? "active" : ""}`}
-                onClick={() => void updateProfile({ language: l })}
-              >
+              <button key={l} type="button" className={`chip ${profile?.language === l ? "active" : ""}`} onClick={() => void updateProfile({ language: l })}>
                 {l === "en" ? "English" : "\u0627\u0644\u0639\u0631\u0628\u064a\u0629"}
               </button>
             ))}
@@ -85,20 +78,8 @@ export function Settings() {
         <div>
           <label>{t(lang, "chatStyle")}</label>
           <div className="chip-row">
-            {(
-              [
-                ["en", "styleEn"],
-                ["fusha", "styleFusha"],
-                ["khaleeji", "styleKhaleeji"],
-                ["arabizi", "styleArabizi"],
-              ] as [ChatStyle, string][]
-            ).map(([s, k]) => (
-              <button
-                key={s}
-                type="button"
-                className={`chip ${profile?.chat_style === s ? "active" : ""}`}
-                onClick={() => void updateProfile({ chat_style: s })}
-              >
+            {([["en", "styleEn"], ["fusha", "styleFusha"], ["khaleeji", "styleKhaleeji"], ["arabizi", "styleArabizi"]] as [ChatStyle, string][]).map(([s, k]) => (
+              <button key={s} type="button" className={`chip ${profile?.chat_style === s ? "active" : ""}`} onClick={() => void updateProfile({ chat_style: s })}>
                 {t(lang, k)}
               </button>
             ))}
@@ -108,14 +89,9 @@ export function Settings() {
           <label>{t(lang, "theme")}</label>
           <div className="chip-row">
             {(["light", "dark", "ramadan"] as Theme[]).map((th) => (
-              <button
-                key={th}
-                type="button"
-                className={`chip ${profile?.theme === th ? "active" : ""}`}
-                onClick={() => void updateProfile({ theme: th })}
-              >
+              <button key={th} type="button" className={`chip ${profile?.theme === th ? "active" : ""}`} onClick={() => void updateProfile({ theme: th })}>
                 {t(lang, th)}
-              </ inter>
+              </button>
             ))}
           </div>
         </div>
@@ -123,23 +99,14 @@ export function Settings() {
           <label>{t(lang, "digits")}</label>
           <div className="chip-row">
             {(["latn", "arab"] as Digits[]).map((d) => (
-              <button
-                key={d}
-                type="button"
-                className={`chip ${profile?.digits === d ? "active" : ""}`}
-                onClick={() => void updateProfile({ digits: d })}
-              >
+              <button key={d} type="button" className={`chip ${profile?.digits === d ? "active" : ""}`} onClick={() => void updateProfile({ digits: d })}>
                 {d === "arab" ? t(lang, "arabDigits") : t(lang, "latinDigits")}
               </button>
             ))}
           </div>
         </div>
         <label className="row">
-          <input
-            type="checkbox"
-            checked={!!profile?.large_text}
-            onChange={(e) => void updateProfile({ large_text: e.target.checked })}
-          />
+          <input type="checkbox" checked={!!profile?.large_text} onChange={(e) => void updateProfile({ large_text: e.target.checked })} />
           {t(lang, "largeText")}
         </label>
       </div>
@@ -158,49 +125,20 @@ export function Settings() {
 
       <div className="card stack">
         <h3>{t(lang, "feedback")}</h3>
-        <textarea
-          placeholder={t(lang, "feedbackPlaceholder")}
-          value={fb}
-          onChange={(e) => setFb(e.target.value)}
-        />
-        <button
-          className="btn secondary block"
-          type="button"
-          onClick={async () => {
-            if (!fb.trim()) return;
-            await sendFeedback(fb.trim());
-            setFb("");
-            setFbOk(true);
-          }}
-        >
+        <textarea placeholder={t(lang, "feedbackPlaceholder")} value={fb} onChange={(e) => setFb(e.target.value)} />
+        <button className="btn secondary block" type="button" onClick={async () => { if (!fb.trim()) return; await sendFeedback(fb.trim()); setFb(""); setFbOk(true); }}>
           {t(lang, "send")}
         </button>
         {fbOk && <div className="success">{t(lang, "thanksFeedback")}</div>}
       </div>
 
       <div className="card stack">
-        <button className="btn secondary block" type="button" onClick={exportCsv}>
-          {t(lang, "exportData")}
-        </button>
-        <button className="btn ghost block" type="button" onClick={() => void signOut()}>
-          {t(lang, "logout")}
-        </button>
+        <button className="btn secondary block" type="button" onClick={exportCsv}>{t(lang, "exportData")}</button>
+        <button className="btn ghost block" type="button" onClick={() => void signOut()}>{t(lang, "logout")}</button>
         <div>
           <label>{t(lang, "deleteAccount")}</label>
-          <input
-            placeholder={t(lang, "confirmDelete")}
-            value={delText}
-            onChange={(e) => setDelText(e.target.value)}
-          />
-          <button
-            className="btn danger block"
-            style={{ marginTop: 8 }}
-            type="button"
-            disabled={delText !== "DELETE"}
-            onClick={async () => {
-              await deleteAccount();
-            }}
-          >
+          <input placeholder={t(lang, "confirmDelete")} value={delText} onChange={(e) => setDelText(e.target.value)} />
+          <button className="btn danger block" style={{ marginTop: 8 }} type="button" disabled={delText !== "DELETE"} onClick={async () => { await deleteAccount(); }}>
             {t(lang, "deleteAccount")}
           </button>
         </div>
