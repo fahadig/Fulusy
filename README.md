@@ -4,6 +4,17 @@ Mobile-first expense app for the **United Arab Emirates** and the wider Middle E
 
 **Repo:** https://github.com/fahadig/Fulusy
 
+## Versioning
+
+| Item | Value |
+|------|--------|
+| Current | **1.0.0** |
+| Snapshot folder | [`v1.0/`](v1.0/) |
+| Freeze branch | `release/1.0` |
+| Git tag | `v1.0.0` (see [VERSIONING.md](VERSIONING.md)) |
+
+See **[VERSIONING.md](VERSIONING.md)** for how updates work (tags + version folders).
+
 ## Features
 
 - Demo mode (no backend keys required)
