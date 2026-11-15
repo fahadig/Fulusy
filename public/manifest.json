@@ -1,0 +1,13 @@
+{
+  "name": "Fulusy",
+  "short_name": "Fulusy",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#EDF2EF",
+  "theme_color": "#0D6A56",
+  "lang": "en",
+  "dir": "auto",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
